@@ -9,6 +9,12 @@ use rocket::response::Redirect;
 use rocket::response::status::{BadRequest, NotFound};
 use rocket::State;
 
+// TODO:
+// 1. Persistence with an AWS-provided database (like Aurora or DynamoDB)
+// 2. Expiring links, so that a given memory / storage limit isn't exceeded
+// 3. A fully fleshed-out frontend with common pages (such as an FAQ, contact us)
+// 4. A custom domain name + https support for EB
+
 #[get("/")]
 fn index() -> Status {
     Status::Ok

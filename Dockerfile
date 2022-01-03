@@ -5,8 +5,8 @@ FROM rust as build
 WORKDIR /repo
 
 # copy all our files across from our local repo to the /repo directory in the container
-COPY Cargo.lock .
-COPY Cargo.toml .
+COPY Cargo.lock ./
+COPY Cargo.toml ./
 
 # cache dependencies by creating an empty 'lib.rs file and building the project
 RUN mkdir src
@@ -17,14 +17,14 @@ RUN cargo build --release
 COPY src src
 
 # build the release
-RUN cargo install --offline --path .
+RUN cargo install --offline --path ./
 
 # use a node image for building the site
 FROM node:16 as static
 
 WORKDIR /svelte
 
-COPY ./svelte .
+COPY ./svelte ./
 
 RUN yarn install && yarn build
 
@@ -40,7 +40,7 @@ COPY --from=build /usr/local/cargo/bin/aws-rust-api /usr/local/bin/aws-rust-api
 COPY --from=static /svelte/build/ ./static
 
 # copy config file
-COPY Rocket.toml .
+COPY Rocket.toml ./
 
 # this command is run when we actually start the container
 CMD ["aws-rust-api"]

@@ -43,7 +43,7 @@ fn shorten(url: String, state: &State<DashMap<u32, String>>) -> Result<String, B
 fn rocket() -> _ {
     rocket::build()
         .manage(DashMap::<u32, String>::new()) // tell rocket to manage the state of this concurrent hashmap
-        .mount("/", routes![index, shorten, redirect])
+        .mount("/", routes![healthcheck, shorten, redirect])
         .mount(
             "/",
             if cfg!(debug_assertions) {

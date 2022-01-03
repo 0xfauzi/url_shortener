@@ -1,17 +1,14 @@
 [package]
-name = "URL"
+name = "aws-rust-api"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-
 # for REST services in Rust
 rocket = "0.5.0-rc.1"
-
 # concurrent hashmap implementation
 dashmap = "4.0.2"
-
 # random number generator
 rand = "0.8.4"

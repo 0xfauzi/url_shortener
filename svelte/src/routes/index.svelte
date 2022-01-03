@@ -1,4 +1,4 @@
-<script xmlns:on="http://www.w3.org/1999/xhtml" xmlns:on="http://www.w3.org/1999/xhtml">
+<script xmlns:on="http://www.w3.org/1999/xhtml">
     import superagent from "superagent";
 
     let url = "";

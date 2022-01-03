@@ -12,3 +12,6 @@ rocket = "0.5.0-rc.1"
 
 # concurrent hashmap implementation
 dashmap = "4.0.2"
+
+# random number generator
+rand = "0.8.4"

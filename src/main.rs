@@ -4,13 +4,14 @@ extern crate rocket;
 use dashmap::DashMap;
 use rand::{Rng, thread_rng};
 use rocket::fs::FileServer;
+use rocket::http::Status;
 use rocket::response::Redirect;
 use rocket::response::status::{BadRequest, NotFound};
 use rocket::State;
 
 #[get("/")]
-fn index() -> &'static str {
-    "Hello world!"
+fn index() -> Status {
+    Status::Ok
 }
 
 #[get("/<key>")]

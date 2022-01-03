@@ -3,6 +3,7 @@ extern crate rocket;
 
 use dashmap::DashMap;
 use rand::{Rng, thread_rng};
+use rocket::fs::FileServer;
 use rocket::response::Redirect;
 use rocket::response::status::{BadRequest, NotFound};
 use rocket::State;
@@ -36,11 +37,20 @@ fn rocket() -> _ {
     rocket::build()
         .manage(DashMap::<u32, String>::new()) // tell rocket to manage the state of this concurrent hashmap
         .mount("/", routes![index, shorten, redirect])
+        .mount(
+            "/",
+            if cfg!(debug_assertions) {
+                //debug mode, therefore servce relative to crate root
+                FileServer::from(rocket::fs::relative!("/svelte/build"))
+            } else {
+                //dockerized, therefore serve from absolute path
+                FileServer::from("/app/static")
+            },
+        )
 }
 
 #[cfg(test)]
 mod tests {
-
     use rocket::http::Status;
     use rocket::local::blocking::Client;
     use super::rocket;
@@ -75,7 +85,6 @@ mod tests {
 
     #[test]
     fn empty_url() {
-
         let client = Client::tracked(rocket())
             .expect("valid rocket instance");
 
@@ -86,12 +95,22 @@ mod tests {
 
     #[test]
     fn invalid_url() {
-
         let client = Client::tracked(rocket())
             .expect("valid rocket instance");
 
         let response = client.post("/123").dispatch();
 
         assert_eq!(response.status(), Status::NotFound);
+    }
+
+    #[test]
+    fn static_site() {
+
+        let client = Client::tracked(rocket())
+            .expect("valid rocket instance");
+
+        let response = client.get("/").dispatch();
+
+        assert_eq!(response.status(), Status::Ok);
     }
 }

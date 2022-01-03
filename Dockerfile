@@ -19,6 +19,15 @@ COPY src src
 # build the release
 RUN cargo install --offline --path .
 
+# use a node image for building the site
+FROM node:16 as static
+
+WORKDIR /svelte
+
+COPY ./svelte .
+
+RUN yarn install && yarn build
+
 # use a slim image for actually running the container
 FROM rust:slim
 
@@ -28,6 +37,7 @@ WORKDIR /app
 EXPOSE 80
 
 COPY --from=build /usr/local/cargo/bin/aws-rust-api /usr/local/bin/aws-rust-api
+COPY --from=static /svelte/build/ ./static
 
 # copy config file
 COPY Rocket.toml .

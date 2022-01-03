@@ -15,8 +15,8 @@ use rocket::State;
 // 3. A fully fleshed-out frontend with common pages (such as an FAQ, contact us)
 // 4. A custom domain name + https support for EB
 
-#[get("/")]
-fn index() -> Status {
+#[get("/healthcheck")]
+fn healthcheck() -> Status {
     Status::Ok
 }
 

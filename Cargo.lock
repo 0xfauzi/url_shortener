@@ -6,6 +6,7 @@ version = 3
 name = "URL"
 version = "0.1.0"
 dependencies = [
+ "dashmap",
  "rocket",
 ]
 
@@ -133,6 +134,16 @@ dependencies = [
  "percent-encoding",
  "time",
  "version_check",
+]
+
+[[package]]
+name = "dashmap"
+version = "4.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e77a43b28d0668df09411cb0bc9a8c2adc40f9a048afe863e05fd43251e8e39c"
+dependencies = [
+ "cfg-if",
+ "num_cpus",
 ]
 
 [[package]]
